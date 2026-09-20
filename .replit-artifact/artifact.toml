@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Yuvraj Birthday Gift"
+description = "A playful, heartfelt birthday microsite made for Yuvraj, with interactive surprises and a personal message that feels like a real gift rather than a generic greeting."
+version = "1.0.0"
+id = "artifacts/yuvraj-birthday-gift"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23363
+
+[services.development]
+run = "pnpm --filter @workspace/yuvraj-birthday-gift run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/yuvraj-birthday-gift", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/yuvraj-birthday-gift/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23363"
+BASE_PATH = "/"
